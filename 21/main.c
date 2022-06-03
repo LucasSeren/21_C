@@ -3,17 +3,10 @@
 #include <time.h>
 #include <stdlib.h>
 
-<<<<<<< Updated upstream
-int baralho(int cartas[]){
-int mesa[52];
-int t,i;
-for( i=0;i<52;i++){
-    mesa[i] = (i/13+3)*100 + i%13 + 1;
-}
-=======
-int Dinheiro[4];//cada elemento do  vetor sera a pontuação de um jogador
-int Mao[4][10];// a primeira dimencao e para dizer o jogador a segunda, para cada carta
+float Dinheiro[4];//cada elemento do  vetor sera a pontuação de um jogador
+int Mao[5][10], Baralho[52];// a primeira dimencao e para dizer o jogador e a segunda, para cada carta
 
+//devolver um arranjo que corresponde a ordem em que as cartas estao embaralhadas
 int embaralhar(int cartas[]){
 	int mesa[52];
 	int t,i;
@@ -23,7 +16,6 @@ int embaralhar(int cartas[]){
 	}
 
 	//Embaralha o baralho e o guarda na variavel de destino
->>>>>>> Stashed changes
 	srand(time(NULL));
 	for (i = 0; i < 52; i++)
 	{
@@ -38,31 +30,50 @@ int embaralhar(int cartas[]){
 return 0;
 }
 
-<<<<<<< Updated upstream
-int converter_naipe(int a){
-if ((a%100==11) ||(a%100==12) ||(a%100==13)) return (a/100)*100+10;
-	else return a;
-=======
 //Converte o valor da carta para a sua pontuação
 int ponto_carta(int a){
 	if ((a%100==11) ||(a%100==12) ||(a%100==13)) return (a/100)*100+10;
 	else if(a%100==1){
 		//pergunta ao jogador se ele quer 1 ou 11
 	}else return a;
->>>>>>> Stashed changes
 
 }
 
-<<<<<<< Updated upstream
-return 0;
-=======
-int joga(void){
+int jogo(void){
+	float aposta[4];
+	int curCard = 0, tmao = 4, curMao[5] = {0, 0, 0, 0, 0};
+
+
+	embaralhar(Baralho);
+
+	for(int jogador = 0; jogador < 4; jogador++){
+		
+		/*
+		printf("\nJogador %d tem: R$%.2f", jogador, Dinheiro[0]);
+		printf("\nquanto gostaria de apostar?: ");
+		scanf("%.2f", &aposta[jogador]);
+		*/
+
+		printf("\nMao do jogador %d: ", jogador+1);
+		for(; curMao[jogador] < 2; curMao[jogador]++, curCard++){
+			Mao[jogador][curMao[jogador]] = Baralho[curCard];
+
+			printf("%d, ", Mao[jogador][curMao[jogador]]);
+		}
+	}
+
+	for(; curMao[4] < 2; curMao[4]++, curCard++){
+			Mao[5][curMao[4]] = Baralho[curCard];
+	}
 	
+	printf("\nO dealer recebeu: %d e uma carta virada", Mao[5][0]);
+
+
 	return 0;
->>>>>>> Stashed changes
 }
 int main(void)
 {
-
+	jogo();
+	
 	return 0;
 }
