@@ -1,10 +1,24 @@
-
+#include <string.h>
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
 
-float Dinheiro[4];//cada elemento do  vetor sera a pontuação de um jogador
-int Mao[5][10], Baralho[52];// a primeira dimencao e para dizer o jogador e a segunda, para cada carta
+typedef struct pessoa {
+	char name[50];
+	int saldo;
+	int aposta;
+	int mao[10];
+	int tamao;
+	int curPont;
+}p;
+
+
+typedef struct baralho {
+	int numCartas;
+	int cart[52];
+
+}b;
+
+b Baralho = {51, {}};
 
 //devolver um arranjo que corresponde a ordem em que as cartas estao embaralhadas
 int embaralhar(int cartas[]){
@@ -39,41 +53,56 @@ int ponto_carta(int a){
 
 }
 
-int jogo(void){
-	float aposta[4];
-	int curCard = 0, tmao = 4, curMao[5] = {0, 0, 0, 0, 0};
-
-
-	embaralhar(Baralho);
-
-	for(int jogador = 0; jogador < 4; jogador++){
-		
-		/*
-		printf("\nJogador %d tem: R$%.2f", jogador, Dinheiro[0]);
-		printf("\nquanto gostaria de apostar?: ");
-		scanf("%.2f", &aposta[jogador]);
-		*/
-
-		printf("\nMao do jogador %d: ", jogador+1);
-		for(; curMao[jogador] < 2; curMao[jogador]++, curCard++){
-			Mao[jogador][curMao[jogador]] = Baralho[curCard];
-
-			printf("%d, ", Mao[jogador][curMao[jogador]]);
-		}
-	}
-
-	for(; curMao[4] < 2; curMao[4]++, curCard++){
-			Mao[5][curMao[4]] = Baralho[curCard];
-	}
-	
-	printf("\nO dealer recebeu: %d e uma carta virada", Mao[5][0]);
-
-
-	return 0;
+p distributor(p pessoa){
+	pessoa.mao[pessoa.tamao] = Baralho.cart[Baralho.numCartas];
+	pessoa.tamao++;
+	Baralho.numCartas--;
+	return pessoa;
 }
-int main(void)
-{
-	jogo();
+
+int main(){
+
+
 	
+	p j1 = {"Luan", 1000, 0, {}, 0};
+	p dealer = {"Louige", 1000, 0, {}, 0};
+
+	embaralhar(Baralho.cart);
+
+	//pedindo o valor da aposta do jogador 1
+	printf("Quanto vc quer apostar:");
+	scanf("%d", &j1.aposta);
+
+	while (j1.aposta > j1.saldo)
+	{
+		printf("Voce nao tem esse valor\nTente um valor menor: ");
+		scanf("%d", &j1.aposta);
+	};
+	j1.saldo -= j1.aposta;
+
+	//Distribuicao
+	for (int i = 0; i < 2; i++)
+	{
+		system("cls");
+		j1 = distributor(j1);
+
+		dealer = distributor(dealer);
+		
+	}
+	
+	printf("Mao do jogador 1: ");	
+	for (int j = 0; j < j1.tamao; j++){
+		printf("%d, ", j1.mao[j]);
+	}
+		printf("\n");
+
+	printf("Mao do dealer: %d, %s", dealer.mao[0], "down");
+	
+	//verificar naturais
+
+	
+	
+
+
 	return 0;
 }
