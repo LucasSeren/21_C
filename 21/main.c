@@ -53,19 +53,24 @@ int ponto_carta(int a){
 
 }
 
+//Da cartas para alguem e atualiza o numero de cartas do baralho
 p distributor(p pessoa){
+
 	pessoa.mao[pessoa.tamao] = Baralho.cart[Baralho.numCartas];
+	
 	pessoa.tamao++;
 	Baralho.numCartas--;
+	
 	return pessoa;
 }
 
 int main(){
 
 
-	
+	//Instanciando entidades
 	p j1 = {"Luan", 1000, 0, {}, 0};
 	p dealer = {"Louige", 1000, 0, {}, 0};
+
 
 	embaralhar(Baralho.cart);
 
